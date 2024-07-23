@@ -9,12 +9,48 @@ package com.lucaf.yamltranslator;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DuckDuckTranslate {
+    public static class Lang {
+        public String code;
+        public String name;
+
+        public Lang(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+    }
+
+    public static Lang[] languages;
+
+    static {
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream inputStream = classloader.getResourceAsStream("langs-duckduck.json");
+        try {
+            JSONArray langs = new JSONArray(new String(inputStream.readAllBytes()));
+            languages = new DuckDuckTranslate.Lang[langs.length()];
+            for (int i = 0; i < langs.length(); i++) {
+                JSONObject lang = langs.getJSONObject(i);
+                languages[i] = new DuckDuckTranslate.Lang(lang.getString("code"), lang.getString("name"));
+            }
+            inputStream.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
     private static String vqd = "";
     private static String UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 13_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/125.2.332137730 Mobile/17H35 Safari/604.1";
 

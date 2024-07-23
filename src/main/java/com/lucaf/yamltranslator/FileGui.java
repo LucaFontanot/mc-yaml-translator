@@ -29,8 +29,8 @@ public class FileGui {
             inputyFileText.setText(fileChooser.getSelectedFile().getAbsolutePath());
         });
         TRANSLATEButton.addActionListener(e -> {
-            GTranslate.Lang from = GTranslate.languages[fromLang.getSelectedIndex()];
-            GTranslate.Lang to = GTranslate.languages[toLang.getSelectedIndex()];
+            DuckDuckTranslate.Lang from = DuckDuckTranslate.languages[fromLang.getSelectedIndex()];
+            DuckDuckTranslate.Lang to = DuckDuckTranslate.languages[toLang.getSelectedIndex()];
             JFileChooser fileChooser = new JFileChooser();
             if (fileChooser.showSaveDialog(panel1) == JFileChooser.APPROVE_OPTION) {
                 File file = fileChooser.getSelectedFile();
@@ -42,7 +42,7 @@ public class FileGui {
             }
 
         });
-        for (GTranslate.Lang lang : GTranslate.languages) {
+        for (DuckDuckTranslate.Lang lang : DuckDuckTranslate.languages) {
             fromLang.addItem(lang.name);
             toLang.addItem(lang.name);
         }

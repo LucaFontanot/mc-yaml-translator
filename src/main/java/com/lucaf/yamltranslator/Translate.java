@@ -28,14 +28,14 @@ public class Translate implements Callable<Yaml> {
 
     final File file;
     final File output;
-    final GTranslate.Lang from;
-    final GTranslate.Lang to;
+    final DuckDuckTranslate.Lang from;
+    final DuckDuckTranslate.Lang to;
     private JLabel translatorTitle;
     private JTextArea logger;
     private JPanel panel;
 
 
-    public Translate(File file, File output, GTranslate.Lang from, GTranslate.Lang to) {
+    public Translate(File file, File output, DuckDuckTranslate.Lang from, DuckDuckTranslate.Lang to) {
         this.file = file;
         this.from = from;
         this.to = to;
@@ -55,7 +55,8 @@ public class Translate implements Callable<Yaml> {
     }
 
     public static Map<String, String> formatCodes = Map.of(
-            "<", ">"
+            "<", ">",
+            "/", " "
     );
 
     public static Map<String, String> specialFormats = Map.of(
@@ -226,7 +227,7 @@ public class Translate implements Callable<Yaml> {
                         addLog("Translating: " + o.toString());
                         onn.set(i, translateMcFormattedString(o.toString()));
                         //obj.put(key, translateMcFormattedString(o.toString()));
-                        addLog("Translated: " + o.toString());
+                        addLog("Translated: " + onn.get(i).toString());
                     }
                     i++;
                 }
